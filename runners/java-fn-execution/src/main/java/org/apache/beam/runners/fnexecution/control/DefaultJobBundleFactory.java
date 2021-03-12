@@ -65,6 +65,7 @@ import org.apache.beam.sdk.fn.IdGenerators;
 import org.apache.beam.sdk.fn.data.FnDataReceiver;
 import org.apache.beam.sdk.fn.stream.OutboundObserverFactory;
 import org.apache.beam.sdk.function.ThrowingFunction;
+import org.apache.beam.sdk.io.FileSystems;
 import org.apache.beam.sdk.options.ExperimentalOptions;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PortablePipelineOptions;
@@ -668,6 +669,8 @@ public class DefaultJobBundleFactory implements JobBundleFactory {
     PortablePipelineOptions portableOptions =
         PipelineOptionsTranslation.fromProto(jobInfo.pipelineOptions())
             .as(PortablePipelineOptions.class);
+
+    FileSystems.setDefaultPipelineOptions(portableOptions);
 
     GrpcFnServer<FnApiControlClientPoolService> controlServer =
         GrpcFnServer.allocatePortAndCreateFor(
